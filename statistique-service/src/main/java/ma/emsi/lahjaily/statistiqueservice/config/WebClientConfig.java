@@ -1,0 +1,20 @@
+package ma.emsi.lahjaily.statistiqueservice.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@Configuration
+public class WebClientConfig {
+
+    @Value("${youtube.api.base-url}")
+    private String youtubeBaseUrl;
+
+    @Bean
+    public WebClient youtubeWebClient() {
+        return WebClient.builder()
+                .baseUrl(youtubeBaseUrl)
+                .build();
+    }
+}
