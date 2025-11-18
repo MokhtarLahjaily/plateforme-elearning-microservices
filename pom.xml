@@ -26,6 +26,11 @@
         <tag/>
         <url/>
     </scm>
+    <modules>
+        <module>cours-service</module>
+        <module>inscription-service</module>
+        <module>statistique-service</module>
+    </modules>
     <properties>
         <java.version>21</java.version>
     </properties>
