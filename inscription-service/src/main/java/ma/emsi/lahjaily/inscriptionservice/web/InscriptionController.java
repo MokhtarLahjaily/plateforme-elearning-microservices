@@ -1,5 +1,6 @@
 package ma.emsi.lahjaily.inscriptionservice.web;
 
+import feign.FeignException;
 import ma.emsi.lahjaily.inscriptionservice.clients.CoursServiceClient;
 import ma.emsi.lahjaily.inscriptionservice.model.Inscription;
 import ma.emsi.lahjaily.inscriptionservice.repositories.InscriptionRepository;
@@ -22,21 +23,26 @@ public class InscriptionController {
 
     @PostMapping("/inscriptions")
     public ResponseEntity<Inscription> createInscription(@RequestBody Inscription inscription) {
-        // Validate that the student and course exist
         try {
-            if (coursServiceClient.getEtudiantById(inscription.getEtudiantId()) == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            if (coursServiceClient.getCoursById(inscription.getCoursId()) == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        } catch (Exception e) {
-            // Feign might throw an exception if the service is down or returns 404
-            e.printStackTrace(); // Log the full exception
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+            // Ces appels lèveront FeignException si le cours ou l'étudiant est introuvable (404)
+            coursServiceClient.getEtudiantById(inscription.getEtudiantId());
+            coursServiceClient.getCoursById(inscription.getCoursId());
 
-        Inscription savedInscription = inscriptionRepository.save(inscription);
-        return new ResponseEntity<>(savedInscription, HttpStatus.CREATED);
+            Inscription savedInscription = inscriptionRepository.save(inscription);
+            return new ResponseEntity<>(savedInscription, HttpStatus.CREATED);
+
+        } catch (FeignException.NotFound e) {
+            // ID non trouvé dans cours-service -> C'est une erreur de validation client (400)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        } catch (FeignException e) {
+            // Erreur de dépendance (service down, 5xx)
+            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+
+        } catch (Exception e) {
+            // Erreur locale imprévue
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

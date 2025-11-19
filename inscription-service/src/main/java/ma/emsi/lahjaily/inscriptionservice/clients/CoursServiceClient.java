@@ -12,6 +12,6 @@ public interface CoursServiceClient {
     @GetMapping("/api/courses/{id}")
     Cours getCoursById(@PathVariable Long id);
 
-    @GetMapping("/api/etudiants/{id}")
+    @GetMapping("/api/students/{id}")
     Etudiant getEtudiantById(@PathVariable Long id);
 }
