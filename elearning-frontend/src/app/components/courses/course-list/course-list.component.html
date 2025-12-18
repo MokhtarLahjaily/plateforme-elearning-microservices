@@ -1,0 +1,24 @@
+<div class="course-list">
+	<div class="state" *ngIf="loading">Loading courses...</div>
+	<div class="state error" *ngIf="error">{{ error }}</div>
+
+	<div class="course-grid" *ngIf="!loading && courses.length">
+		<div class="course-card" *ngFor="let course of courses">
+			<div class="card-body">
+				<h3 class="card-title">{{ course.titre }}</h3>
+				<p class="card-text">{{ course.description }}</p>
+				<p class="card-meta">Prof: {{ course.professeur?.nom }}</p>
+			</div>
+			<div class="card-actions">
+				<a class="btn btn-primary" [routerLink]="['/courses', course.id]">Details</a>
+				<a class="btn btn-outline-secondary" [routerLink]="['/stats']" [queryParams]="{ topic: course.titre }">
+					Related Videos
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="state" *ngIf="!loading && !courses.length && !error">
+		No courses found.
+	</div>
+</div>

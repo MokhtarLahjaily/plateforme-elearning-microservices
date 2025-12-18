@@ -1,0 +1,31 @@
+<div class="youtube-search">
+	<h2>Vidéos associées</h2>
+
+	<div class="state" *ngIf="loading">Chargement...</div>
+	<div class="state error" *ngIf="error">{{ error }}</div>
+	<div class="state" *ngIf="!loading && !error && !query">Aucun sujet fourni.</div>
+	<div class="state" *ngIf="!loading && !error && query && !videos.length">Aucune vidéo trouvée.</div>
+
+	<div class="video-list" *ngIf="videos.length">
+		<article class="video-card" *ngFor="let video of videos">
+			<img
+				class="thumb"
+				[src]="video.snippet?.thumbnails?.medium?.url || video.snippet?.thumbnails?.default?.url"
+				[alt]="video.snippet?.title"
+			/>
+			<div class="info">
+				<h3>{{ video.snippet?.title }}</h3>
+				<p>{{ video.snippet?.description }}</p>
+				<a
+					*ngIf="videoId(video)"
+					class="btn btn-sm btn-outline-primary"
+					[href]="'https://www.youtube.com/watch?v=' + videoId(video)"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Regarder sur YouTube
+				</a>
+			</div>
+		</article>
+	</div>
+</div>

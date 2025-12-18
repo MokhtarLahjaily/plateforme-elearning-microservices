@@ -1,0 +1,40 @@
+.inscription-form {
+	max-width: 480px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.form-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+select, button {
+	padding: 0.5rem 0.75rem;
+	border-radius: 8px;
+	border: 1px solid #d1d5db;
+	font-size: 1rem;
+}
+
+button.btn {
+	cursor: pointer;
+}
+
+.hint {
+	color: #6b7280;
+	font-size: 0.9rem;
+}
+
+.error {
+	color: #c0392b;
+	font-size: 0.9rem;
+}

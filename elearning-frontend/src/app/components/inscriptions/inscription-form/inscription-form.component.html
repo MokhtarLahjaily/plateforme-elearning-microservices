@@ -1,0 +1,36 @@
+<div class="inscription-form">
+	<h2>Nouvelle inscription</h2>
+
+	<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+	<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+	<form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+		<label class="form-group">
+			<span>Étudiant</span>
+			<select formControlName="etudiantId" [disabled]="loadingStudents || submitting">
+				<option value="" disabled selected>-- Sélectionner un étudiant --</option>
+				<option *ngFor="let student of students" [value]="student.id">
+					{{ student.nom }} ({{ student.email }})
+				</option>
+			</select>
+			<small class="hint" *ngIf="loadingStudents">Chargement des étudiants...</small>
+			<small class="error" *ngIf="form.controls.etudiantId.touched && form.controls.etudiantId.invalid">Requis</small>
+		</label>
+
+		<label class="form-group">
+			<span>Cours</span>
+			<select formControlName="coursId" [disabled]="loadingCourses || submitting">
+				<option value="" disabled selected>-- Sélectionner un cours --</option>
+				<option *ngFor="let course of courses" [value]="course.id">
+					{{ course.titre }} - {{ course.professeur?.nom }}
+				</option>
+			</select>
+			<small class="hint" *ngIf="loadingCourses">Chargement des cours...</small>
+			<small class="error" *ngIf="form.controls.coursId.touched && form.controls.coursId.invalid">Requis</small>
+		</label>
+
+		<button type="submit" class="btn btn-primary" [disabled]="submitting || form.invalid">
+			{{ submitting ? 'Envoi...' : 'Soumettre' }}
+		</button>
+	</form>
+</div>
