@@ -1,0 +1,47 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Modifier le Cours #{{ id }}</h2>
+        <a routerLink="/manage-courses" class="btn btn-outline-secondary">Retour</a>
+    </div>
+
+    <div *ngIf="loading" class="text-center py-5">Chargement...</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <form *ngIf="!loading && !error" [formGroup]="form" (ngSubmit)="submit()" class="card p-4 shadow-sm">
+        <div class="mb-3">
+            <label class="form-label">Titre</label>
+            <input formControlName="titre" type="text" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea formControlName="description" rows="2" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Contenu</label>
+            <textarea formControlName="contenu" rows="4" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Niveau</label>
+            <select formControlName="niveau" class="form-select">
+                <option value="Debutant">Debutant</option>
+                <option value="Intermediaire">Intermediaire</option>
+                <option value="Avance">Avance</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Professeur</label>
+            <select formControlName="professeurId" class="form-select">
+                <option value="" disabled>-- Sélectionner --</option>
+                <option *ngFor="let prof of professors" [value]="prof.id">{{ prof.nom }}</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
+            {{ saving ? 'Mise à jour...' : 'Enregistrer les modifications' }}
+        </button>
+    </form>
+</div>

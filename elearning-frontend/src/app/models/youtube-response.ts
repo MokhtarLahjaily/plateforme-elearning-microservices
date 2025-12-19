@@ -3,8 +3,8 @@ export interface YoutubeResponse {
 }
 
 export interface YoutubeVideo {
-	id: VideoId;
-	snippet: VideoSnippet;
+	id?: VideoId;
+	snippet?: VideoSnippet;
 }
 
 export interface VideoId {

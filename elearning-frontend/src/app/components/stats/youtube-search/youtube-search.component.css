@@ -4,6 +4,26 @@
 	gap: 1rem;
 }
 
+.header {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.search {
+	display: flex;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.search input {
+	padding: 0.5rem 0.75rem;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+}
+
 .state {
 	color: #555;
 }

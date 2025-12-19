@@ -1,0 +1,53 @@
+.course-detail {
+	background: #fff;
+	border-radius: 12px;
+	padding: 1.5rem;
+	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.subtitle {
+	color: #4b5563;
+	margin: 0.5rem 0 1rem;
+}
+
+.meta {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 1rem;
+	margin-bottom: 1.25rem;
+}
+
+.label {
+	display: block;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-size: 0.75rem;
+	color: #6b7280;
+}
+
+.muted {
+	color: #6b7280;
+}
+
+.list {
+	padding-left: 1.1rem;
+	margin-bottom: 1.25rem;
+}
+
+.state {
+	padding: 1rem;
+	text-align: center;
+	color: #4b5563;
+}
+
+.state.error {
+	color: #b91c1c;
+}

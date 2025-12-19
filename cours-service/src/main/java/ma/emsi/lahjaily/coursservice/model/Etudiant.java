@@ -22,4 +22,13 @@ public class Etudiant {
     @ManyToMany(mappedBy = "etudiants")
     @JsonIgnore
     private Collection<Cours> cours;
+
+    @PreRemove
+    private void removeCoursFromEtudiant() {
+        if (cours != null) {
+            for (Cours c : cours) {
+                c.getEtudiants().remove(this);
+            }
+        }
+    }
 }

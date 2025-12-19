@@ -5,6 +5,8 @@ export interface Cours {
 	id: number;
 	titre: string;
 	description: string;
-	professeur: Professeur;
-	etudiants: Etudiant[];
+	contenu?: string;
+	niveau?: string;
+	professeur?: Professeur;
+	etudiants?: Etudiant[];
 }

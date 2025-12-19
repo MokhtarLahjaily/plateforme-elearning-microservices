@@ -1,0 +1,24 @@
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.table th {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.badge {
+    font-size: 0.8rem;
+    padding: 0.3em 0.6em;
+}
+
+.state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+}
+
+.state.error {
+    color: #dc3545;
+}

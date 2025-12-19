@@ -1,5 +1,5 @@
 .inscription-form {
-	max-width: 480px;
+	max-width: 960px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
@@ -12,13 +12,63 @@
 	gap: 1rem;
 }
 
+.tables {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1rem;
+}
+
+.card {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 0.75rem;
+	box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.card header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.5rem;
+}
+
+.table {
+	width: 100%;
+	font-size: 0.95rem;
+	border-collapse: collapse;
+}
+
+.table td {
+	padding: 0.5rem;
+	border-bottom: 1px solid #f3f4f6;
+}
+
+.card {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 1.25rem;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card h4 {
+	margin-top: 0;
+	color: #374151;
+}
+
+.muted {
+	color: #6b7280;
+}
+
 .form-group {
 	display: flex;
 	flex-direction: column;
 	gap: 0.35rem;
 }
 
-select, button {
+select,
+button {
 	padding: 0.5rem 0.75rem;
 	border-radius: 8px;
 	border: 1px solid #d1d5db;

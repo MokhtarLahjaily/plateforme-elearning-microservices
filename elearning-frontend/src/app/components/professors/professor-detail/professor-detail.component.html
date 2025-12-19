@@ -1,0 +1,35 @@
+<div class="detail-container" *ngIf="!loading && professor; else stateBlock">
+    <div class="header">
+        <h2>Détails du Professeur</h2>
+        <a class="btn btn-outline-secondary" routerLink="/professors">← Retour</a>
+    </div>
+
+    <div class="card">
+        <div class="item">
+            <span class="label">ID:</span>
+            <span>{{ professor.id }}</span>
+        </div>
+        <div class="item">
+            <span class="label">Nom:</span>
+            <span class="value">{{ professor.nom }}</span>
+        </div>
+        <div class="item">
+            <span class="label">Email:</span>
+            <span class="value">{{ professor.email }}</span>
+        </div>
+    </div>
+
+    <div class="courses-section" *ngIf="professorCourses.length">
+        <h3>Cours Enseignés</h3>
+        <ul class="list">
+            <li *ngFor="let c of professorCourses">
+                <a [routerLink]="['/courses', c.id]">{{ c.titre }}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<ng-template #stateBlock>
+    <div class="state" *ngIf="loading">Chargement...</div>
+    <div class="state error" *ngIf="!loading && error">{{ error }}</div>
+</ng-template>

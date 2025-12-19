@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StatistiqueService } from '../../../services/statistique.service';
 import { YoutubeResponse, YoutubeVideo } from '../../../models/youtube-response';
@@ -7,7 +8,7 @@ import { YoutubeResponse, YoutubeVideo } from '../../../models/youtube-response'
 @Component({
   selector: 'app-youtube-search',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './youtube-search.component.html',
   styleUrls: ['./youtube-search.component.css']
 })

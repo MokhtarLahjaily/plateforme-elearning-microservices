@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+body {
+	font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+	background: #f6f8fb;
+	color: #1f2933;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+.navbar-brand {
+	font-weight: 700;
+	letter-spacing: 0.25px;
+}
+
+.container {
+	padding-top: 1rem;
+	padding-bottom: 2rem;
+}

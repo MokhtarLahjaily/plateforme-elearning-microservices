@@ -1,1 +1,48 @@
-<p>professor-list works!</p>
+<div class="list-container">
+    <h1>Liste des Professeurs</h1>
+
+    <div class="state" *ngIf="loading">Chargement...</div>
+    <div class="state error" *ngIf="error">{{ error }}</div>
+
+    <div class="table-responsive" *ngIf="!loading && professors.length">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>ID</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of professors">
+                    <td>{{ p.nom }}</td>
+                    <td>{{ p.email }}</td>
+                    <td>{{ p.id }}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a [routerLink]="['/professors', p.id]" class="btn btn-sm btn-outline-primary">Détails</a>
+                            <a [routerLink]="['/professors', p.id, 'edit']"
+                                class="btn btn-sm btn-outline-warning">Modifier</a>
+                            <button (click)="deleteProfessor(p.id)"
+                                class="btn btn-sm btn-outline-danger">Supprimer</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination-controls d-flex justify-content-center align-items-center gap-3 mt-3"
+        *ngIf="totalElements > pageSize">
+        <button class="btn btn-sm btn-outline-primary" [disabled]="currentPage === 0"
+            (click)="prevPage()">Précédent</button>
+        <span>Page {{ currentPage + 1 }} sur {{ (totalElements / pageSize) | number:'1.0-0' }}</span>
+        <button class="btn btn-sm btn-outline-primary" [disabled]="(currentPage + 1) * pageSize >= totalElements"
+            (click)="nextPage()">Suivant</button>
+    </div>
+
+    <div *ngIf="!loading && !professors.length && !error" class="state">
+        Aucun professeur trouvé.
+    </div>
+</div>

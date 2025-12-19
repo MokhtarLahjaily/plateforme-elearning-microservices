@@ -22,28 +22,36 @@ public class CoursServiceApplication {
 
     @Bean
     CommandLineRunner start(CoursRepository coursRepository,
-                            EtudiantRepository etudiantRepository,
-                            ProfesseurRepository professeurRepository) {
+            EtudiantRepository etudiantRepository,
+            ProfesseurRepository professeurRepository) {
         return args -> {
-            // Create Professeur
-            Professeur prof = new Professeur(null, "John Doe", "john.doe@emsi.ma");
-            professeurRepository.save(prof);
-            System.out.println("Saved Professeur with ID: " + prof.getId());
+            // Create Professeurs
+            Professeur prof1 = new Professeur(null, "John Doe", "john.doe@emsi.ma", null);
+            Professeur prof2 = new Professeur(null, "Sarah Connor", "sarah.connor@emsi.ma", null);
+            List<Professeur> savedProfs = professeurRepository.saveAll(List.of(prof1, prof2));
+            Professeur savedProf1 = savedProfs.get(0);
+            Professeur savedProf2 = savedProfs.get(1);
 
             // Create Etudiants
             Etudiant etudiant1 = new Etudiant(null, "Alice Smith", "alice.smith@emsi.ma", null);
             Etudiant etudiant2 = new Etudiant(null, "Bob Johnson", "bob.johnson@emsi.ma", null);
-            etudiantRepository.save(etudiant1);
-            etudiantRepository.save(etudiant2);
-            System.out.println("Saved Etudiant with ID: " + etudiant1.getId());
-            System.out.println("Saved Etudiant with ID: " + etudiant2.getId());
+            Etudiant etudiant3 = new Etudiant(null, "Carlos Diaz", "carlos.diaz@emsi.ma", null);
+            List<Etudiant> savedEtudiants = etudiantRepository.saveAll(List.of(etudiant1, etudiant2, etudiant3));
+            Etudiant savedEtudiant1 = savedEtudiants.get(0);
+            Etudiant savedEtudiant2 = savedEtudiants.get(1);
+            Etudiant savedEtudiant3 = savedEtudiants.get(2);
 
             // Create Cours
-            Cours cours = new Cours(null, "Introduction to Spring Boot", "A comprehensive course on Spring Boot", prof, List.of(etudiant1, etudiant2));
-            coursRepository.save(cours);
-            System.out.println("=========================================");
-            System.out.println("Saved Cours with ID: " + cours.getId());
-            System.out.println("=========================================");
+            Cours cours1 = new Cours(null, "Introduction to Spring Boot", "A comprehensive course on Spring Boot",
+                    "Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications.",
+                    "Debutant", savedProf1, List.of(savedEtudiant1, savedEtudiant2));
+            Cours cours2 = new Cours(null, "Angular pour débutants", "Apprenez Angular pas à pas.",
+                    "Master Angular 14 calls and build amazing apps.", "Intermediaire", savedProf2,
+                    List.of(savedEtudiant2));
+            Cours cours3 = new Cours(null, "Microservices avec Spring Cloud", "Patterns et pratiques pour le cloud.",
+                    "Build cloud-native apps using Spring Cloud.", "Avance", savedProf1,
+                    List.of(savedEtudiant1, savedEtudiant3));
+            coursRepository.saveAll(List.of(cours1, cours2, cours3));
         };
     }
 }

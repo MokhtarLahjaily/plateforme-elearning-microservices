@@ -1,6 +1,56 @@
 <div class="inscription-form">
 	<h2>Nouvelle inscription</h2>
 
+	<div class="tables">
+		<section class="card">
+			<header>
+				<h4>Étudiants (5 derniers)</h4>
+				<a routerLink="/manage" class="btn btn-sm btn-outline-primary">Ajouter</a>
+			</header>
+			<table class="table">
+				<tr *ngFor="let student of latestStudents">
+					<td>{{ student.nom }}</td>
+					<td class="muted">{{ student.email }}</td>
+				</tr>
+				<tr *ngIf="!latestStudents.length">
+					<td class="muted">Aucun étudiant.</td>
+				</tr>
+			</table>
+		</section>
+
+		<section class="card">
+			<header>
+				<h4>Cours (5 derniers)</h4>
+				<a routerLink="/manage" class="btn btn-sm btn-outline-primary">Ajouter</a>
+			</header>
+			<table class="table">
+				<tr *ngFor="let course of latestCourses">
+					<td>{{ course.titre }}</td>
+					<td class="muted">{{ course.professeur?.nom }}</td>
+				</tr>
+				<tr *ngIf="!latestCourses.length">
+					<td class="muted">Aucun cours.</td>
+				</tr>
+			</table>
+		</section>
+
+		<section class="card">
+			<header>
+				<h4>Professeurs (5 derniers)</h4>
+				<a routerLink="/manage" class="btn btn-sm btn-outline-primary">Ajouter</a>
+			</header>
+			<table class="table">
+				<tr *ngFor="let prof of latestProfessors">
+					<td>{{ prof.nom }}</td>
+					<td class="muted">{{ prof.email }}</td>
+				</tr>
+				<tr *ngIf="!latestProfessors.length">
+					<td class="muted">Aucun professeur.</td>
+				</tr>
+			</table>
+		</section>
+	</div>
+
 	<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
 	<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 

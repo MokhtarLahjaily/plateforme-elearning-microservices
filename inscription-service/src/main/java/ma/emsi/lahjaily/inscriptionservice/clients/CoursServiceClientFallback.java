@@ -26,4 +26,9 @@ public class CoursServiceClientFallback implements CoursServiceClient {
         etudiantDefaut.setEmail("inconnu@emsi.ma");
         return etudiantDefaut;
     }
+
+    @Override
+    public void addEtudiantToCourse(Long courseId, String studentUri) {
+        // Log or do nothing
+    }
 }

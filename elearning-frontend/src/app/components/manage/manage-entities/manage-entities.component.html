@@ -1,0 +1,114 @@
+<div class="manage">
+	<div class="header">
+		<h2>Ajouter des entités</h2>
+		<a routerLink="/inscriptions" class="btn btn-link">← Retour</a>
+	</div>
+
+	<div class="grid">
+		<section class="card">
+			<div class="card-header">
+				<h4>Étudiant</h4>
+				<a class="btn btn-sm btn-outline-secondary" routerLink="/inscriptions">Voir la liste</a>
+			</div>
+			<form [formGroup]="studentForm" (ngSubmit)="addStudent()" class="form">
+				<label>
+					<span>Nom</span>
+					<input formControlName="nom" type="text" />
+				</label>
+				<label>
+					<span>Email</span>
+					<input formControlName="email" type="email" />
+				</label>
+
+				<div formArrayName="courseIds" class="mt-3">
+					<span class="small-title">Inscrire à des cours (optionnel)</span>
+					<div *ngFor="let control of studentCourseIds.controls; let i = index" class="d-flex gap-2 mb-2">
+						<select [formControlName]="i" class="form-select form-select-sm">
+							<option value="">-- Choisir --</option>
+							<option *ngFor="let c of courses" [value]="c.id">{{ c.titre }}</option>
+						</select>
+						<button type="button" (click)="removeCourseFromStudent(i)"
+							class="btn btn-sm btn-outline-danger">×</button>
+					</div>
+					<button type="button" (click)="addCourseToStudent()" class="btn btn-sm btn-outline-info w-100">+ un
+						cours</button>
+				</div>
+
+				<button class="btn btn-primary mt-3" type="submit" [disabled]="studentForm.invalid">Ajouter</button>
+				<div class="msg" *ngIf="studentMsg">{{ studentMsg }}</div>
+			</form>
+		</section>
+
+		<section class="card">
+			<div class="card-header">
+				<h4>Professeur</h4>
+				<a class="btn btn-sm btn-outline-secondary" routerLink="/inscriptions">Voir la liste</a>
+			</div>
+			<form [formGroup]="professorForm" (ngSubmit)="addProfessor()" class="form">
+				<label>
+					<span>Nom</span>
+					<input formControlName="nom" type="text" />
+				</label>
+				<label>
+					<span>Email</span>
+					<input formControlName="email" type="email" />
+				</label>
+
+				<div formArrayName="courseIds" class="mt-3">
+					<span class="small-title">Assigner à des cours (optionnel)</span>
+					<div *ngFor="let control of professorCourseIds.controls; let i = index" class="d-flex gap-2 mb-2">
+						<select [formControlName]="i" class="form-select form-select-sm">
+							<option value="">-- Choisir --</option>
+							<option *ngFor="let c of courses" [value]="c.id">{{ c.titre }}</option>
+						</select>
+						<button type="button" (click)="removeCourseFromProfessor(i)"
+							class="btn btn-sm btn-outline-danger">×</button>
+					</div>
+					<button type="button" (click)="addCourseToProfessor()" class="btn btn-sm btn-outline-info w-100">+
+						un cours</button>
+				</div>
+
+				<button class="btn btn-primary mt-3" type="submit" [disabled]="professorForm.invalid">Ajouter</button>
+				<div class="msg" *ngIf="professorMsg">{{ professorMsg }}</div>
+			</form>
+		</section>
+
+		<section class="card">
+			<div class="card-header">
+				<h4>Cours</h4>
+				<a class="btn btn-sm btn-outline-secondary" routerLink="/courses">Voir la liste</a>
+			</div>
+			<form [formGroup]="courseForm" (ngSubmit)="addCourse()" class="form">
+				<label>
+					<span>Titre</span>
+					<input formControlName="titre" type="text" />
+				</label>
+				<label>
+					<span>Description</span>
+					<textarea formControlName="description" rows="2"></textarea>
+				</label>
+				<label>
+					<span>Contenu</span>
+					<textarea formControlName="contenu" rows="3"></textarea>
+				</label>
+				<label>
+					<span>Niveau</span>
+					<select formControlName="niveau">
+						<option value="Debutant">Debutant</option>
+						<option value="Intermediaire">Intermediaire</option>
+						<option value="Avance">Avance</option>
+					</select>
+				</label>
+				<label>
+					<span>Professeur</span>
+					<select formControlName="professeurId">
+						<option value="" disabled>-- Sélectionner --</option>
+						<option *ngFor="let prof of professors" [value]="prof.id">{{ prof.nom }}</option>
+					</select>
+				</label>
+				<button class="btn btn-primary" type="submit" [disabled]="courseForm.invalid">Ajouter</button>
+				<div class="msg" *ngIf="courseMsg">{{ courseMsg }}</div>
+			</form>
+		</section>
+	</div>
+</div>

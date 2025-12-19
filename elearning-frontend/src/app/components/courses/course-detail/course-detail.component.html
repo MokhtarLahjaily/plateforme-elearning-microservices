@@ -1,1 +1,51 @@
-<p>course-detail works!</p>
+<div class="course-detail" *ngIf="!loading && course; else stateBlock">
+	<div class="header">
+		<h2>{{ course.titre }}</h2>
+		<a class="btn btn-outline-secondary btn-sm" routerLink="/courses">← Retour aux cours</a>
+	</div>
+
+	<p class="subtitle">{{ course.description }}</p>
+
+	<div class="meta">
+		<div>
+			<span class="label">Niveau</span>
+			<strong>{{ course.niveau || 'Non spécifié' }}</strong>
+		</div>
+		<div>
+			<span class="label">Professeur</span>
+			<strong>
+				<a [routerLink]="['/professors', course.professeur?.id]" *ngIf="course.professeur?.id; else noProf">
+					{{ course.professeur?.nom }}
+				</a>
+				<ng-template #noProf>Non assigné</ng-template>
+			</strong>
+			<div class="muted">{{ course.professeur?.email }}</div>
+		</div>
+		<div>
+			<span class="label">Participants</span>
+			<strong>{{ course.etudiants?.length || 0 }}</strong>
+		</div>
+	</div>
+
+	<div class="content-box" *ngIf="course.contenu">
+		<h3>Contenu du cours</h3>
+		<p>{{ course.contenu }}</p>
+	</div>
+
+
+	<h4>Étudiants inscrits</h4>
+	<ul class="list">
+		<li *ngFor="let student of course.etudiants">
+			<a [routerLink]="['/students', student.id]">{{ student.nom }}</a> — {{ student.email }}
+		</li>
+		<li *ngIf="!course.etudiants?.length" class="muted">Aucun étudiant pour l'instant.</li>
+	</ul>
+
+	<a class="btn btn-primary" [routerLink]="['/stats']" [queryParams]="{ query: course.titre }">Voir les vidéos
+		liées</a>
+</div>
+
+<ng-template #stateBlock>
+	<div class="state" *ngIf="loading">Chargement du cours...</div>
+	<div class="state error" *ngIf="!loading && error">{{ error }}</div>
+</ng-template>

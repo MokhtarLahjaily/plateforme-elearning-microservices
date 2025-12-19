@@ -1,15 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Cours } from '../../../models/cours';
 import { Etudiant } from '../../../models/etudiant';
+import { Professeur } from '../../../models/professeur';
 import { CoursService } from '../../../services/cours.service';
 import { InscriptionService } from '../../../services/inscription.service';
 
 @Component({
   selector: 'app-inscription-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './inscription-form.component.html',
   styleUrls: ['./inscription-form.component.css']
 })
@@ -20,6 +22,10 @@ export class InscriptionFormComponent implements OnInit {
 
   students: Etudiant[] = [];
   courses: Cours[] = [];
+  professors: Professeur[] = [];
+  latestStudents: Etudiant[] = [];
+  latestCourses: Cours[] = [];
+  latestProfessors: Professeur[] = [];
 
   loadingStudents = false;
   loadingCourses = false;
@@ -36,6 +42,7 @@ export class InscriptionFormComponent implements OnInit {
   ngOnInit(): void {
     this.loadStudents();
     this.loadCourses();
+    this.loadProfessors();
   }
 
   submit(): void {
@@ -67,6 +74,7 @@ export class InscriptionFormComponent implements OnInit {
     this.coursService.getStudents().subscribe({
       next: (students) => {
         this.students = students;
+        this.latestStudents = students.slice(-5).reverse();
         this.loadingStudents = false;
       },
       error: (err) => {
@@ -81,11 +89,24 @@ export class InscriptionFormComponent implements OnInit {
     this.coursService.getCourses().subscribe({
       next: (courses) => {
         this.courses = courses;
+        this.latestCourses = courses.slice(-5).reverse();
         this.loadingCourses = false;
       },
       error: (err) => {
         this.errorMessage = this.mapError(err, 'Impossible de charger les cours');
         this.loadingCourses = false;
+      }
+    });
+  }
+
+  private loadProfessors(): void {
+    this.coursService.getProfessors().subscribe({
+      next: (profs) => {
+        this.professors = profs;
+        this.latestProfessors = profs.slice(-5).reverse();
+      },
+      error: (err) => {
+        this.errorMessage = this.mapError(err, 'Impossible de charger les professeurs');
       }
     });
   }
