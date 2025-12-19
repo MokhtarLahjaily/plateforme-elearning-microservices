@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 // Ajout de l'attribut fallback
 // The cours-service exposes its REST resources under /api (Spring Data REST base-path)
@@ -19,5 +20,5 @@ public interface CoursServiceClient {
     Etudiant getEtudiantById(@PathVariable("id") Long id);
 
     @PostMapping(value = "/courses/{courseId}/etudiants", consumes = "text/uri-list")
-    void addEtudiantToCourse(@PathVariable("courseId") Long courseId, String studentUri);
+    void addEtudiantToCourse(@PathVariable("courseId") Long courseId, @RequestBody String studentUri);
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Cours } from '../models/cours';
 import { Etudiant } from '../models/etudiant';
@@ -68,7 +68,12 @@ export class CoursService {
 
   // Delete methods
   deleteCourse(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/courses/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/courses/${id}`).pipe(
+      catchError(err => {
+        console.error('Erreur lors de la suppression du cours', err);
+        return throwError(() => err);
+      })
+    );
   }
 
   deleteStudent(id: number): Observable<void> {
@@ -81,7 +86,12 @@ export class CoursService {
 
   // ✅ UPDATED: Use PUT instead of PATCH as requested
   updateCourse(id: number, cours: any): Observable<Cours> {
-    return this.http.put<Cours>(`${this.baseUrl}/courses/${id}`, cours);
+    return this.http.put<Cours>(`${this.baseUrl}/courses/${id}`, cours).pipe(
+      catchError(err => {
+        console.error('Erreur lors de la mise à jour du cours', err);
+        return throwError(() => err);
+      })
+    );
   }
 
   updateStudent(id: number, etudiant: any): Observable<Etudiant> {

@@ -27,5 +27,14 @@ public class Cours {
     private Professeur professeur;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "cours_etudiants", joinColumns = @JoinColumn(name = "cours_id"), inverseJoinColumns = @JoinColumn(name = "etudiants_id"))
     private Collection<Etudiant> etudiants;
+
+    @PreRemove
+    private void preRemove() {
+        // Nettoyer manuellement les associations dans la table de jointure via JPA
+        if (etudiants != null) {
+            etudiants.clear();
+        }
+    }
 }
